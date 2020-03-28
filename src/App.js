@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Form from './Form';
+import CardList from './CardList';
 
-function App() {
+const App = () => {
+  const [cards, setCards] = useState([]);
+
+  const addNewCard = cardInfo => {
+    setCards(cards.concat(cardInfo));
+  };
+
+  const handleRemoveCard = url => {
+    setCards(cards.filter(card => card.avatar_url !== url));
+  };
+
+  useEffect(() => console.log(cards));
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form onSubmit={addNewCard} />
+      <CardList cards={cards} removeCard={handleRemoveCard} />
     </div>
   );
-}
+};
 
 export default App;
